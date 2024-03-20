@@ -1,0 +1,25 @@
+.header-box {
+    background-color: #c4d1da;
+    width: fit-content;
+    padding: 0 1em 0 1em;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1em;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-box-title {
+    padding-right: 0.3em;
+    font-size: 1.5em;
+}
+
+.header {
+    text-align: center;
+    border-radius: 1em;
+}
