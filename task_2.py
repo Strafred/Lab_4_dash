@@ -16,32 +16,51 @@ def get_exchange_rates(base_currency):
 app = dash.Dash(__name__)
 
 app.layout = html.Div([
-    html.H1("Курсы валют и конвертер"),
+    html.Div([
+        html.H1("Exchange rates and converter")
+    ], className="header-box"),
 
-    html.Label("Выберите базовую валюту:"),
-    dcc.Dropdown(
-        id='base-currency-dropdown',
-        options=[
-            {'label': currency, 'value': currency} for currency in ['USD', 'EUR', 'GBP', 'RUB']
-        ],
-        value='USD'
-    ),
+    html.Div([
+        html.Div([
+            html.Label("Choose base currency:")
+        ], className="input-box-title"),
+        html.Div([
+            dcc.Dropdown(
+                id='base-currency-dropdown',
+                options=[
+                    {'label': currency, 'value': currency} for currency in ['USD', 'EUR', 'GBP', 'RUB']
+                ],
+                value='USD'
+            )], style={'width': '10em'}),
+    ], className="input-box"),
 
     dcc.Graph(id='exchange-rates-histogram'),
 
-    html.Label("Количество в исходной валюте:"),
-    dcc.Input(id='input-amount', type='number', value=1),
+    html.Div([
+        html.Div([
+            html.Label("Choose base currency amount:")
+        ], className="input-box-title"),
+        html.Div([
+            dcc.Input(id='input-amount', type='number', value=1)], style={'width': '10em'})
+    ], className="input-box"),
 
-    html.Label("Выберите целевую валюту:"),
-    dcc.Dropdown(
-        id='target-currency-dropdown',
-        options=[
-            {'label': currency, 'value': currency} for currency in ['USD', 'EUR', 'GBP', 'RUB']
-        ],
-        value='USD'
-    ),
+    html.Div([
+        html.Div([
+            html.Label("Choose target currency:")
+        ], className="input-box-title"),
+        html.Div([
+            dcc.Dropdown(
+                id='target-currency-dropdown',
+                options=[
+                    {'label': currency, 'value': currency} for currency in ['USD', 'EUR', 'GBP', 'RUB']
+                ],
+                value='USD',
+            )], style={'width': '10em'}),
+    ], className="input-box"),
 
-    html.Div(id='converted-amount')
+    html.Div([
+        html.Div(id='converted-amount')
+    ], className="header-box"),
 ])
 
 
@@ -53,7 +72,7 @@ def update_exchange_rates_histogram(base_currency):
     rates = get_exchange_rates(base_currency)
     df = pd.DataFrame(list(rates.items()), columns=['Валюта', 'Курс'])
     fig = px.histogram(df, x="Валюта", y="Курс", log_y=True)
-    fig.update_layout(title=f"Курсы валют относительно {base_currency}", xaxis_title="Валюта", yaxis_title="Курс")
+    fig.update_layout(title=f"Exchange rates of {base_currency}", xaxis_title="Currency", yaxis_title="Rate")
     return fig
 
 
@@ -66,12 +85,9 @@ def update_exchange_rates_histogram(base_currency):
 def convert_currency(input_amount, base_currency, target_currency):
     if input_amount is None:
         return ''
-
     rates = get_exchange_rates(base_currency)
     conversion_rate = rates.get(target_currency)
-
     converted_amount = input_amount * conversion_rate
-
     return f"{input_amount} {base_currency} = {converted_amount:.2f} {target_currency}"
 
 
