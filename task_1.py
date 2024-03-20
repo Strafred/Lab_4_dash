@@ -66,7 +66,7 @@ def update_pie_chart(selected_complexes):
         filtered_data = filtered_data.value_counts("class") / filtered_data["class"].count() * 100
 
         fig = px.pie(filtered_data, names=filtered_data.index, values="count",
-                     title=f'Распределение успешных запусков по комплексу {selected_complexes[0]}')
+                     title=f'Распределение запусков по комплексу {selected_complexes[0]}')
         return fig, dash.no_update
     else:
         filtered_data = (spacex_data.where(spacex_data["Launch Site"].isin(selected_complexes)).dropna())
