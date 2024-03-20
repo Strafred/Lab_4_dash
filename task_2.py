@@ -56,7 +56,7 @@ app.layout = html.Div([
                 ],
                 value='USD',
             )], style={'width': '10em'}),
-    ], className="input-box"),
+    ], className="input-box", style={'margin-bottom': '1em'}),
 
     html.Div([
         html.Div(id='converted-amount')
